@@ -13,17 +13,17 @@ app.use(express.urlencoded({ extended: false }));
 // Get Methods
 // Routes to index.html
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"));
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 // Routes to notes.html
 app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "public/notes.html"));
+  res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 // Routes to db.json
 app.get("/api/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "db.json"));
+  res.sendFile(path.join(__dirname, "db/db.json"));
 });
 
 // Set static folder
