@@ -26,6 +26,36 @@ app.get("/api/notes", function(req, res) {
   res.sendFile(path.join(__dirname, "db/db.json"));
 });
 
+//POST Method
+// Create new note object and write it to the JSON file with incremented id
+app.post("/api/notes", function(req, res) {
+  fs.readFile(path.join(__dirname, "db/db.json"), "utf8", function(
+    error,
+    response
+  ) {
+    if (error) {
+      console.log(error);
+    }
+    const notes = JSON.parse(response);
+    const noteRequest = req.body;
+    const newNoteId = notes.length + 1;
+    const newNote = {
+      id: newNoteId,
+      title: noteRequest.title,
+      text: noteRequest.text
+    };
+    notes.push(newNote);
+    res.json(newNote);
+    fs.writeFile(
+      path.join(__dirname, "db/db.json"),
+      JSON.stringify(notes),
+      function(err) {
+        if (err) throw err;
+      }
+    );
+  });
+});
+
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")));
 
