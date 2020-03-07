@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Get Methods
+// GET Methods
 // Routes to index.html
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "public/index.html"));
@@ -53,6 +53,30 @@ app.post("/api/notes", function(req, res) {
         if (err) throw err;
       }
     );
+  });
+});
+
+// DELETE Method
+// Removes the note with given id property and rewrites the note the JSON file
+app.delete("/api/notes/:id", function(req, res) {
+  const deleteNote = req.params.id;
+  fs.readFile("db/db.json", "utf8", function(error, response) {
+    if (error) {
+      console.log(error);
+    }
+    let notes = JSON.parse(response);
+    if (deleteNote <= notes.length) {
+      res.json(notes.splice(deleteNote - 1, 1));
+
+      for (let i = 0; i < notes.length; i++) {
+        notes[i].id = i + 1;
+      }
+      fs.writeFile("db/db.json", JSON.stringify(notes), function(err) {
+        if (err) throw err;
+      });
+    } else {
+      res.json(false);
+    }
   });
 });
 
