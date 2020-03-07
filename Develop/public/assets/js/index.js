@@ -4,11 +4,6 @@ var $saveNoteBtn = $(".save-note");
 var $newNoteBtn = $(".new-note");
 var $noteList = $(".list-container .list-group");
 
-// Dependencies. Add a secondary index.js for api/notes routing?
-// const express = require("express");
-// const fs = require("fs");
-// const app = express();
-
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
 
